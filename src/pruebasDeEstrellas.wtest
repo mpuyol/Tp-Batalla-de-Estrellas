@@ -1,0 +1,43 @@
+import Personajes.*
+import Combate.*
+
+describe "Si toro lucharManoAMano contra pamela y tulipan lucharManoAMano contra pocardo" {
+
+	fixture {
+		toro.lucharManoAMano(pamela)
+		tulipan.lucharManoAMano(pocardo)
+	}
+
+	test "toro le quita 1 cinta de papel a pamela, por lo tanto ella solo tiene 1" {
+		assert.that(pamela.objetos() == [ "algodon", "aguaOxigenada", "cintaDePapel" ])
+	}
+
+	test "toro le quita 1 cinta de papel a pamela, por lo tanto toro tiene 1 cinta" {
+		assert.that(toro.botin() == #{ "cintaDePapel" })
+	}
+
+	test "pocardo pierde la mitad de su energia original" {
+		assert.that(pocardo.energia() == 2800)
+	}
+
+}
+
+describe "Si el combate se realiza y todos los ataques se llevan a cabo entre los equipos seleccionados" {
+
+	fixture {
+		combate2v2.gritoGanador()
+	}
+
+	test "Los gritos ganadores son los de Pamela y Tulipan" {
+		assert.that(combate2v2.gritoGanador() == [ "Acá pasó la Pamela", "Hora de cuidar a las plantas" ])
+	}
+
+	test "Pocardo ataco 2 veces, po lo tanto sumo 1000 de energia
+           con un total de 6600 y luego tulipan la redujo a la mitad, po lo tanto quedaria como 3300" {
+		assert.that(pocardo.energia() == 3300)
+	}
+	test "Toro ataco 2 veces, po lo tanto tiene 2 items " {
+		assert.that(toro.botin().size() == 2)
+	}
+}
+
